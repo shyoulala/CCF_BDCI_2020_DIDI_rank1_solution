@@ -30,8 +30,6 @@
     - 2020年科大讯飞事件抽取挑战赛-Top5
     - 2020年科大讯飞农业问答数据处理挑战赛-Top5
 
-- 指导老师：**王进（重庆邮电大学）**
-
 ---
 
 ## 解决方案
@@ -119,57 +117,3 @@
   ### 模型融合
 
   线性加权：final=nnx0.7+lgbx0.3 
-
-# 代码复现说明
-
-镜像复现：见/image/README.md
-
-当前目录装环境后复现：
-
-依赖:
-
-```
-GPU显存存限制：10G+
-内存限制：64G+
-CUDA Version：10.1.243
-CUDNN Version：7.6.4
-python3.7
-pandas==0.24.2
-numpy==1.16.2
-lightgbm==2.2.1
-scikit-learn==0.20.3
-scipy==1.2.1
-tqdm
-torch==1.6.0(GPU版) （/image/目录下提供了网盘下载  -Z_torch_1.6.0_cuda10.1_BaiDuDownload.txt）
-torchvision==0.7.0 (GPU版)（/image/目录下提供了网盘下载-Z_torch_1.6.0_cuda10.1_BaiDuDownload.txt）
-prefetch-generator==1.0.1
-```
-
-安装后上述环境后：
-
-1.训练+预测，需要把原始文件放置在../raw_data/:
-
-```
--data
-	-row_data
-       -20190801_testdata.txt
-       -attr.txt
-       -topo.txt
-       -traffic-fix.tar.gz
-```
-
-traffic-fix.tar.gz 是训练集的文件，也就是在滴滴官网下载下来的文件格式，解压后是 **traffic/20190701.txt、 traffic/20190701.txt ....**
-
-**sh main.sh** 在../prediction_result/ 可得到预测结果。
-
-2.**得到线上一致结果：**
-
-由于nn在不同主机上具有随机性，我们提供了预测得到一致结果的深度学习模型权重。
-
-流程如下：
-
-​		需要把原始文件放置在../raw_data/，同1
-
-​		/image/目录下提供了网盘下载nn模型（Z_nn_model_BaiduDownload.txt）  ,下载后放置在 ../user_data/
-
-​		sh main_only_predict_nn.sh ，在../prediction_result/ 可得到预测结果。
